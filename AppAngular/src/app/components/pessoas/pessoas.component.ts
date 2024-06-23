@@ -20,15 +20,17 @@ export class PessoasComponent implements OnInit {
   pessoaId?: number;
   nomePessoa : any;
   pessoa? : number;
-  modalRef! : BsModalRef
+  modalRef! : BsModalRef;
+  page: number = 1;
+  totalPessoas?: number;
 
   constructor(private fb: FormBuilder, private pessoasService: PessoasService,
     private modalService : BsModalService , private toastr: ToastrService) {}
 
   ngOnInit(): void {
-
     this.pessoasService.PegarTodos().subscribe(resultado => {
       this.pessoas = resultado;
+      this.totalPessoas = this.pessoas.length;
     });
   }
 
@@ -101,6 +103,7 @@ export class PessoasComponent implements OnInit {
       this.toastr.success('Pessoa excluída com sucesso');
       this.pessoasService.PegarTodos().subscribe(registros => {
         this.pessoas = registros;
+        this.totalPessoas = this.pessoas.length;
       });
     });
   }

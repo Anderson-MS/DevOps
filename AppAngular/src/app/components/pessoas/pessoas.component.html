@@ -17,21 +17,22 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pessoa of pessoas">
+        <tr *ngFor="let pessoa of pessoas | paginate: { itemsPerPage: 10, currentPage: page, totalItems: totalPessoas }">
           <td>{{pessoa.nome}}</td>
           <td>{{pessoa.sobrenome}}</td>
           <td>{{pessoa.idade}}</td>
           <td>{{pessoa.profissao}}</td>
           <td>{{pessoa.escolaridade}}</td>
           <td>
-            <button type="button" class="btn btn-sm btn-outline-info me-1" (click)="ExibirFormularioAtualizacao(pessoa.pessoaId)">
-              Atualizar</button>
-            <button type="button" class="btn btn-sm btn-outline-danger"
-              (click)="ExibirConfirmacaoExclusao(pessoa.pessoaId , pessoa.nome , conteudoModal)">Excluir</button>
+            <button type="button" class="btn btn-sm btn-outline-info me-1" (click)="ExibirFormularioAtualizacao(pessoa.pessoaId)">Atualizar</button>
+            <button type="button" class="btn btn-sm btn-outline-danger" (click)="ExibirConfirmacaoExclusao(pessoa.pessoaId , pessoa.nome , conteudoModal)">Excluir</button>
           </td>
         </tr>
       </tbody>
     </table>
+    <div class="d-flex justify-content-center mt-4" >
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
   </div>
 </div>
 
