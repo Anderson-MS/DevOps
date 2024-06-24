@@ -4,6 +4,9 @@ import { Pessoa } from '../../Pessoa';
 import { PessoasService } from '../../pessoas.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-pessoas',
@@ -11,7 +14,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./pessoas.component.css']
 })
 export class PessoasComponent implements OnInit {
-
   formulario: any;
   tituloFormulario: string = '';
   pessoas?: Pessoa[];
@@ -106,5 +108,20 @@ export class PessoasComponent implements OnInit {
         this.totalPessoas = this.pessoas.length;
       });
     });
+  }
+
+  exportPDF(): void {
+      const doc = new jsPDF();
+
+      const table = document.getElementById('tabelaPessoas');
+
+      const data = this.pessoas?.map(p => [p.nome, p.sobrenome, p.idade, p.profissao, p.escolaridade]) || [];
+
+      (doc as any).autoTable({
+          head: [['Nome', 'Sobrenome', 'Idade', 'Profissão', 'Escolaridade']],
+          body: data
+      });
+
+      doc.save('pessoas.pdf');
   }
 }
