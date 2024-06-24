@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pessoas',
@@ -27,7 +28,7 @@ export class PessoasComponent implements OnInit {
   totalPessoas?: number;
 
   constructor(private fb: FormBuilder, private pessoasService: PessoasService,
-    private modalService : BsModalService , private toastr: ToastrService) {}
+    private modalService : BsModalService , private toastr: ToastrService, private router: Router) {}
 
   ngOnInit(): void {
     this.pessoasService.PegarTodos().subscribe(resultado => {
@@ -83,6 +84,9 @@ export class PessoasComponent implements OnInit {
         this.toastr.success('Pessoa Inserida Com sucesso');
         this.pessoasService.PegarTodos().subscribe(registros => {
           this.pessoas = registros;
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         });
       });
     }
@@ -124,4 +128,10 @@ export class PessoasComponent implements OnInit {
 
       doc.save('pessoas.pdf');
   }
+
+  logout(): void {
+    // Adicione aqui qualquer lógica de limpeza ou logout que você precise
+    this.router.navigate(['/login']);
+  }
+
 }

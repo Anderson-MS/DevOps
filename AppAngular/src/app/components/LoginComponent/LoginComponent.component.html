@@ -1,0 +1,18 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card p-4">
+    <h2 class="text-center mb-4">Login</h2>
+    <form>
+      <div class="mb-3">
+        <label for="username" class="form-label">Usuário:</label>
+        <input [(ngModel)]="username" name="username" id="username" type="text" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Senha:</label>
+        <input [(ngModel)]="password" name="password" id="password" type="password" class="form-control">
+      </div>
+      <div class="d-grid gap-2">
+        <button type="button" class="btn btn-primary" (click)="login()">Entrar</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -13,11 +13,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoginComponent } from './components/LoginComponent/LoginComponent.component';
+import { FormsModule } from '@angular/forms'; // Importe FormsModule
 
 @NgModule({
   declarations: [
     AppComponent,
-    PessoasComponent
+    PessoasComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxPaginationModule,
+    FormsModule
   ],
   providers: [HttpClientModule ,
     PessoasService,
