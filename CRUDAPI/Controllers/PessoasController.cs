@@ -58,5 +58,14 @@ namespace CRUDAPI.Controllers
             await _contexto.SaveChangesAsync();
             return Ok();
         }
+
+        [HttpGet]
+        [Route("verificarcpf/{cpf}")]
+        public async Task<ActionResult<bool>> VerificarCPFCadastradoAsync(string cpf)
+        {
+            var pessoa = await _contexto.Pessoas.FirstOrDefaultAsync(p => p.CPF == cpf);
+            return Ok(pessoa != null);
+        }
+
     }
 }

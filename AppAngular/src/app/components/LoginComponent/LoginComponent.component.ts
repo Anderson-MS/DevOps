@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,18 +11,13 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toastr: ToastrService,) {}
 
   login(): void {
-
-    // Aqui você deve adicionar a lógica de validação das credenciais
     if (this.username === 'admin' && this.password === 'admin') {
-      // Redirecionar para a página de gerenciamento de pessoas
-      this.router.navigate(['/pessoas']);
+         this.router.navigate(['/pessoas']);
     } else {
-      //alert('Credenciais inválidas');
-      console.log(this.username);
-      console.log(this.password);
+      this.toastr.error('Senha Incorreta');
     }
   }
 }

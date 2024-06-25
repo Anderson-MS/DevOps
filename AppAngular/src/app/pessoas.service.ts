@@ -39,4 +39,8 @@ export class PessoasService {
     const apiUrl = `${this.url}/${pessoaId}`;
     return this.http.delete<number>(apiUrl, httpOptions);
   }
+
+  verificarCPFExistente(cpf: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.url}/verificarcpf/${cpf}`);
+  }
 }

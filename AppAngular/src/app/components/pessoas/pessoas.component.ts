@@ -80,15 +80,22 @@ export class PessoasComponent implements OnInit {
         });
       });
     }else{
-      this.pessoasService.SalvarPessoa(pessoa).subscribe(resultado => {
-        this.visibilidadeFormulario = false;
-        this.visibilidadeTabela = true;
-        this.toastr.success('Pessoa Inserida Com sucesso');
-        this.pessoasService.PegarTodos().subscribe(registros => {
-          this.pessoas = registros;
-          setTimeout(() => {
-            window.location.reload();
-          }, 500);
+      this.pessoasService.verificarCPFExistente(pessoa.cpf).subscribe((cpfExistente: boolean) => {
+        if (cpfExistente) {
+          this.toastr.error('CPF já cadastrado');
+          return;
+        }
+
+        this.pessoasService.SalvarPessoa(pessoa).subscribe(() => {
+          this.visibilidadeFormulario = false;
+          this.visibilidadeTabela = true;
+          this.toastr.success('Pessoa inserida com sucesso');
+          this.pessoasService.PegarTodos().subscribe(registros => {
+            this.pessoas = registros;
+            setTimeout(() => {
+              window.location.reload();
+            }, 500);
+          });
         });
       });
     }
