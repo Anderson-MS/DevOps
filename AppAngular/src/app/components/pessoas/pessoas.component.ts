@@ -18,6 +18,7 @@ export class PessoasComponent implements OnInit {
   formulario: any;
   tituloFormulario: string = '';
   pessoas?: Pessoa[];
+  pessoasFiltradas?: Pessoa[];
   visibilidadeTabela : boolean = true;
   visibilidadeFormulario : boolean = false;
   pessoaId?: number;
@@ -26,6 +27,7 @@ export class PessoasComponent implements OnInit {
   modalRef! : BsModalRef;
   page: number = 1;
   totalPessoas?: number;
+  filtroNome: string = '';
 
   constructor(private fb: FormBuilder, private pessoasService: PessoasService,
     private modalService : BsModalService , private toastr: ToastrService, private router: Router) {}
@@ -34,7 +36,15 @@ export class PessoasComponent implements OnInit {
     this.pessoasService.PegarTodos().subscribe(resultado => {
       this.pessoas = resultado;
       this.totalPessoas = this.pessoas.length;
+      this.filtrarPessoas();
     });
+  }
+
+  filtrarPessoas(): void {
+    this.pessoasFiltradas = this.pessoas?.filter(pessoa =>
+      pessoa.nome.toLowerCase().includes(this.filtroNome.toLowerCase())
+    );
+    this.totalPessoas = this.pessoasFiltradas?.length;
   }
 
   ExibirformularioCadastro(): void{
@@ -72,11 +82,12 @@ export class PessoasComponent implements OnInit {
     const pessoa: Pessoa = this.formulario.value;
     if( pessoa.pessoaId > 0){
       this.pessoasService.AtualizarPessoa(pessoa).subscribe(resultado => {
-        this.visibilidadeFormulario = false;
-        this.visibilidadeTabela = true;
-        this.toastr.success('Pessoa Atualizada Com sucesso');
-        this.pessoasService.PegarTodos().subscribe(registros => {
+          this.visibilidadeFormulario = false;
+          this.visibilidadeTabela = true;
+          this.toastr.success('Pessoa Atualizada Com sucesso');
+          this.pessoasService.PegarTodos().subscribe(registros => {
           this.pessoas = registros;
+          this.filtrarPessoas();
         });
       });
     }else{
@@ -91,7 +102,8 @@ export class PessoasComponent implements OnInit {
           this.visibilidadeTabela = true;
           this.toastr.success('Pessoa inserida com sucesso');
           this.pessoasService.PegarTodos().subscribe(registros => {
-            this.pessoas = registros;
+          this.pessoas = registros;
+          this.filtrarPessoas();
             setTimeout(() => {
               window.location.reload();
             }, 500);
@@ -101,46 +113,41 @@ export class PessoasComponent implements OnInit {
     }
   }
 
-  Voltar():void{
+  Voltar(): void {
     this.visibilidadeTabela = true;
     this.visibilidadeFormulario = false;
   }
 
-  ExibirConfirmacaoExclusao(pessoaId: number, nomePessoa : any, conteudoModal: TemplateRef<any>): void {
+  ExibirConfirmacaoExclusao(pessoaId: number, nomePessoa: any, conteudoModal: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(conteudoModal);
     this.pessoaId = pessoaId;
     this.nomePessoa = nomePessoa;
   }
 
-  ExcluirPessoa(pessoaId: number){
+  ExcluirPessoa(pessoaId: number): void {
     this.pessoasService.ExcluirPessoa(pessoaId).subscribe(resultado => {
       this.modalRef.hide();
       this.toastr.success('Pessoa excluída com sucesso');
       this.pessoasService.PegarTodos().subscribe(registros => {
         this.pessoas = registros;
-        this.totalPessoas = this.pessoas.length;
+        this.filtrarPessoas();
       });
     });
   }
 
   exportPDF(): void {
-      const doc = new jsPDF();
+    const doc = new jsPDF();
+    const table = document.getElementById('tabelaPessoas');
+    const data = this.pessoasFiltradas?.map(p => [p.nome, p.sobrenome, p.idade, p.profissao, p.escolaridade, p.cpf]) || [];
 
-      const table = document.getElementById('tabelaPessoas');
-
-      const data = this.pessoas?.map(p => [p.nome, p.sobrenome, p.idade, p.profissao, p.escolaridade , p.cpf]) || [];
-
-      (doc as any).autoTable({
-          head: [['Nome', 'Sobrenome', 'Idade', 'Profissão', 'Escolaridade', 'CPF']],
-          body: data
-      });
-
-      doc.save('pessoas.pdf');
+    (doc as any).autoTable({
+      head: [['Nome', 'Sobrenome', 'Idade', 'Profissão', 'Escolaridade', 'CPF']],
+      body: data
+    });
+    doc.save('pessoas.pdf');
   }
 
   logout(): void {
-    // Adicione aqui qualquer lógica de limpeza ou logout que você precise
     this.router.navigate(['/login']);
   }
-
 }

@@ -9,7 +9,13 @@
       <button type="button" class="btn btn-sm btn-secondary" (click)="ExibirformularioCadastro()">Nova Pessoa</button>
     </div>
     <hr/>
-    <table class="table table-striped table-hover table-sm" *ngIf="pessoas">
+
+    <div class="mb-3">
+      <label for="filtroNome">Filtrar por Nome</label>
+      <input type="text" id="filtroNome" class="form-control form-control-sm" [(ngModel)]="filtroNome" (ngModelChange)="filtrarPessoas()"/>
+    </div>
+
+    <table class="table table-striped table-hover table-sm" *ngIf="pessoasFiltradas && pessoasFiltradas.length > 0">
       <thead class="thead-light">
         <tr>
           <th>Nome</th>
@@ -22,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let pessoa of pessoas | paginate: { itemsPerPage: 10, currentPage: page, totalItems: totalPessoas }">
+        <tr *ngFor="let pessoa of pessoasFiltradas | paginate: { itemsPerPage: 10, currentPage: page, totalItems: totalPessoas }">
           <td>{{pessoa.nome}}</td>
           <td>{{pessoa.sobrenome}}</td>
           <td>{{pessoa.idade}}</td>
