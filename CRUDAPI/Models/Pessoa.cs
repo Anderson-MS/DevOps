@@ -8,6 +8,7 @@
         public int Idade { get; set; }
         public string Profissao { get; set; }
         public string Escolaridade { get; set; }
+        public string CPF { get; set; }
 
     }
 }

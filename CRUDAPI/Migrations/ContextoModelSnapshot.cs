@@ -40,6 +40,9 @@ namespace CRUDAPI.Migrations
                     b.Property<string>("Escolaridade")
                        .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CPF")
+                       .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PessoaId");
 
                     b.ToTable("Pessoas");
