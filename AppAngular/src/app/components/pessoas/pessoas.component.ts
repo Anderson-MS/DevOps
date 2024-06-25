@@ -46,7 +46,8 @@ export class PessoasComponent implements OnInit {
       sobrenome: [null],
       idade: [null],
       profissao: [null],
-      escolaridade: [null]
+      escolaridade: [null],
+      cpf: [null],
     });
   }
 
@@ -61,7 +62,8 @@ export class PessoasComponent implements OnInit {
         sobrenome: new FormControl(resultado.sobrenome),
         idade: new FormControl(resultado.idade),
         profissao: new FormControl(resultado.profissao),
-        escolaridade: new FormControl(resultado.escolaridade)
+        escolaridade: new FormControl(resultado.escolaridade),
+        cpf: new FormControl(resultado.cpf)
       });
     });
   }
@@ -119,10 +121,10 @@ export class PessoasComponent implements OnInit {
 
       const table = document.getElementById('tabelaPessoas');
 
-      const data = this.pessoas?.map(p => [p.nome, p.sobrenome, p.idade, p.profissao, p.escolaridade]) || [];
+      const data = this.pessoas?.map(p => [p.nome, p.sobrenome, p.idade, p.profissao, p.escolaridade , p.cpf]) || [];
 
       (doc as any).autoTable({
-          head: [['Nome', 'Sobrenome', 'Idade', 'Profissão', 'Escolaridade']],
+          head: [['Nome', 'Sobrenome', 'Idade', 'Profissão', 'Escolaridade', 'CPF']],
           body: data
       });
 

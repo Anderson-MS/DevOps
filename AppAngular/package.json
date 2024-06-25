@@ -24,6 +24,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
     "ngx-bootstrap": "^12.0.0",
+    "ngx-mask": "^17.0.8",
     "ngx-pagination": "^6.0.3",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",

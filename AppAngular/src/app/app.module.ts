@@ -15,12 +15,14 @@ import { provideToastr } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './components/LoginComponent/LoginComponent.component';
 import { FormsModule } from '@angular/forms'; // Importe FormsModule
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 @NgModule({
   declarations: [
     AppComponent,
     PessoasComponent,
     LoginComponent
+
   ],
   imports: [
     BrowserModule,
@@ -32,12 +34,15 @@ import { FormsModule } from '@angular/forms'; // Importe FormsModule
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxPaginationModule,
-    FormsModule
+    FormsModule,
+    NgxMaskDirective,  // Adicione esta linha
+    NgxMaskPipe
   ],
   providers: [HttpClientModule ,
     PessoasService,
     provideAnimations(),
     provideToastr(),
+    provideNgxMask(),
   ],
   bootstrap: [AppComponent]
 })
