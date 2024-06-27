@@ -36,8 +36,8 @@
           <td>{{pessoa.escolaridade}}</td>
           <td>{{pessoa.cpf}}</td>
           <td>
-            <button type="button" class="btn btn-sm btn-outline-info me-1" (click)="ExibirFormularioAtualizacao(pessoa.pessoaId)">Atualizar</button>
-            <button type="button" class="btn btn-sm btn-outline-danger" (click)="ExibirConfirmacaoExclusao(pessoa.pessoaId , pessoa.nome , conteudoModal)">Excluir</button>
+            <img src="assets/icons/pen-to-square-solid.svg" alt="Example Icon" (click)="ExibirFormularioAtualizacao(pessoa.pessoaId)" title="Atualizar" style="margin-right: 8px;">           
+            <img src="assets/icons/trash-solid.svg" alt="Example Icon" (click)="ExibirConfirmacaoExclusao(pessoa.pessoaId , pessoa.nome , conteudoModal)" title="Excluir">           
           </td>
         </tr>
       </tbody>
