@@ -1,22 +1,24 @@
 <div class="container p-5" *ngIf="visibilidadeTabela">
-  <div class="border border-light rounded p-5 shadow-sm">
+  <div class="border border-light rounded p-5 shadow-sm bg-light-custom">
     <div class="d-flex justify-content-end mb-3">
-      <button type="button" class="btn btn-light" (click)="logout()">Sair</button>
+      <button type="button" class="btn btn-danger" (click)="logout()">Sair</button>
     </div>
 
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h3>Gerenciamento de Pessoas</h3>
-      <button type="button" class="btn btn-sm btn-secondary" (click)="ExibirformularioCadastro()">Nova Pessoa</button>
+      <h3 class="mb-0">Gerenciamento de Pessoas</h3>
+      <button type="button" class="btn btn-sm btn-primary" (click)="ExibirformularioCadastro()">
+        <i class="fas fa-plus"></i> Nova Pessoa
+      </button>
     </div>
     <hr/>
 
     <div class="mb-3">
-      <label for="filtroNome">Filtrar por Nome</label>
-      <input type="text" id="filtroNome" class="form-control form-control-sm" [(ngModel)]="filtroNome" (ngModelChange)="filtrarPessoas()"/>
+      <label for="filtroNome" class="form-label">Filtrar por Nome</label>
+      <input type="text" id="filtroNome" class="form-control form-control-sm" [(ngModel)]="filtroNome" (ngModelChange)="filtrarPessoas()" placeholder="Digite o nome"/>
     </div>
 
     <table class="table table-striped table-hover table-sm" *ngIf="pessoasFiltradas && pessoasFiltradas.length > 0">
-      <thead class="thead-light">
+      <thead class="table-dark">
         <tr>
           <th>Nome</th>
           <th>Sobrenome</th>
@@ -24,7 +26,7 @@
           <th>Profissão</th>
           <th>Escolaridade</th>
           <th>CPF</th>
-          <th>Ações</th>
+          <th class="text-center">Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -35,15 +37,19 @@
           <td>{{pessoa.profissao}}</td>
           <td>{{pessoa.escolaridade}}</td>
           <td>{{pessoa.cpf}}</td>
-          <td>
-            <img src="assets/icons/pen-to-square-solid.svg" alt="Example Icon" (click)="ExibirFormularioAtualizacao(pessoa.pessoaId)" title="Atualizar" style="margin-right: 8px;">           
-            <img src="assets/icons/trash-solid.svg" alt="Example Icon" (click)="ExibirConfirmacaoExclusao(pessoa.pessoaId , pessoa.nome , conteudoModal)" title="Excluir">           
+          <td class="text-center">
+            <button class="btn btn-sm btn-warning btn-spacing" (click)="ExibirFormularioAtualizacao(pessoa.pessoaId)" title="Atualizar">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="ExibirConfirmacaoExclusao(pessoa.pessoaId , pessoa.nome , conteudoModal)" title="Excluir">
+              <i class="fas fa-trash"></i>
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
     <div class="d-flex justify-content-between align-items-center mt-4">
-      <button type="button" class="btn btn-sm btn-primary" (click)="exportPDF()">Exportar para PDF</button>
+      <button type="button" class="btn btn-sm btn-success" (click)="exportPDF()">Exportar para PDF</button>
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
@@ -51,7 +57,7 @@
 
 <div class="container p-5" *ngIf="visibilidadeFormulario">
   <div class="row justify-content-center">
-    <div class="col-md-6 border-light rounded p-5 shadow">
+    <div class="col-md-6 border-light rounded p-5 shadow bg-light-custom">
       <h4>{{ tituloFormulario }}</h4>
       <hr/>
       <form [formGroup]="formulario" (ngSubmit)="EnviarFormulario()">
@@ -72,7 +78,7 @@
           <input type="text" class="form-control form-control-sm" formControlName="profissao"/>
         </div>
         <div class="form-group mb-3">
-          <label>escolaridade</label>
+          <label>Escolaridade</label>
           <input type="text" class="form-control form-control-sm" formControlName="escolaridade"/>
         </div>
         <div class="form-group mb-3">
